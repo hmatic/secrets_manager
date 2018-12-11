@@ -1,5 +1,5 @@
-# ProductiveSecrets
-Short description and motivation.
+# Secrets Manager gem
+WORK IN PROGRESS
 
 ## Usage
 How to use my plugin.
@@ -8,7 +8,7 @@ How to use my plugin.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'productive_secrets'
+gem 'secrets_manager'
 ```
 
 And then execute:
@@ -18,7 +18,7 @@ $ bundle
 
 Or install it yourself as:
 ```bash
-$ gem install productive_secrets
+$ gem install secrets_manager
 ```
 
 ## Contributing
