@@ -9,8 +9,10 @@ module SecretsManager
       secret_config.init
       puts 'Secrets.json file is missing.' if secret_config.nil?
       aws_client = SecretsManager::Client.new
-      puts secret_config.secrets
+
       secret_config.secrets.each do |secret|
+        next if File.file?(Rails.root.join(secret.path))
+
         aws_client.read_secret_json(secret.id).each do |key, value|
           ENV[key.to_s] = value
         end
