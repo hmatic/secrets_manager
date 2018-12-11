@@ -78,15 +78,22 @@ In order to use Rails hook, it's enough to define this gem in Gemfile.
 ## CLI usage
 Secrets Manager CLI provides several commands:
 
-#### Help
+### HELP
+List all commands and their descriptions:
 ```
 secrets-manager help
 ```
+You can use it with specific command:
+```
+secrets-manager help <command>
+```
 
-#### Pull
+### PULL
+Pull secrets locally:
 ```
 secrets-manager pull
 ```
+Options:
 - `--environment` (`-e`) - interpolate $environment variable in configuration (defaults to **development**)
 - `--path` (`-p`) - path to configuration file (defaults to **secrets.json**)
 
