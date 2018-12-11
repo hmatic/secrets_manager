@@ -1,5 +1,8 @@
 # Secrets Manager gem
-WORK IN PROGRESS
+Easy secrets management for AWS Secret Manager service.
+This gem provides:
+- Rails hook (injects secrets directly into ENV when booting Rails)
+- CLI (pull, read, delete, update secrets using simple CLI interface) 
 
 ## Installation
 Add this line to your application's Gemfile:
@@ -96,6 +99,8 @@ secrets-manager pull
 Options:
 - `--environment` (`-e`) - interpolate $environment variable in configuration (defaults to **development**)
 - `--path` (`-p`) - path to configuration file (defaults to **secrets.json**)
+
+### More commands coming soon :)
 
 ## Contributing
 Contribution directions go here.
