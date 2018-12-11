@@ -6,6 +6,7 @@ module SecretsManager
     config.before_configuration do
       puts 'Initializing secrets via Secrets Manager gem'
       secret_config = SecretsManager::Config.new(Rails.root.join('secrets.json'), Rails.env)
+      secret_config.init
       puts 'Secrets.json file is missing.' if secret_config.nil?
       aws_client = SecretsManager::Client.new
       puts secret_config.secrets
