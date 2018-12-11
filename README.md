@@ -40,6 +40,7 @@ Secret_manager uses `secrets.json` to configure how it handles secrets. Here is 
   }
 }
 ```
+ID is obligatory, other options can be left out and default will be used.
 
 #### ID
 Represents secret_id used to retrieve secret from AWS Secret Manager.
@@ -70,6 +71,8 @@ Defaults to `env`.
 Defines path where secrets will be pulled when using CLI.
 
 Rails hook will check if this file exists. If it exists, Rails hook will ignore secrets which have this path specified in configuration.
+
+Defaults to `config/application.yml`.
 
 ## Authorization
 Use same authorization process as AWS-CLI:
