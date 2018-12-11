@@ -103,7 +103,7 @@ Options:
 ### More commands coming soon :)
 
 ## Contributing
-Contribution directions go here.
+Contributing is possible once v1.0 is released. Feel free to open PRs/issues.
 
 ## License
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
