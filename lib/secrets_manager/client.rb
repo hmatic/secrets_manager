@@ -6,12 +6,27 @@ module SecretsManager
       @client = Aws::SecretsManager::Client.new
     end
 
-    def read_secret_string(secret_id)
+    def get_secret_string(secret_id)
       @client.get_secret_value(secret_id: secret_id).secret_string
+    rescue Aws::SecretsManager::Errors::ServiceError
+      aws_error(secret_id)
     end
 
-    def read_secret_json(secret_id)
-      JSON.parse(@client.get_secret_value(secret_id: secret_id).secret_string)
+    def get_secret_hash(secret_id)
+      return if (secret_string = get_secret_string(secret_id)).nil?
+
+      JSON.parse(secret_string)
+    rescue JSON::ParserError
+      json_parsing_error(secret_id)
+    end
+
+    def json_parsing_error(secret_id)
+      puts "Could not parse JSON in \"#{secret_id}\" secret. Please check your secret contents."
+      puts 'You can also define your secret type as "plaintext".'
+    end
+
+    def aws_error(secret_id)
+      puts "Could not retrieve \"#{secret_id}\" secret from AWS. Please check you configured everything correctly."
     end
   end
 end

@@ -36,6 +36,29 @@ module SecretsManager
         @path = path || 'config/application.yml'
       end
 
+      def plaintext?
+        input == 'plaintext'
+      end
+
+      def json?
+        input == 'json'
+      end
+
+      def to_env?
+        type == 'env'
+      end
+
+      def to_file?
+        type == 'file'
+      end
+
+      def yaml_output?
+        path.strip.end_with? '.yml'
+      end
+
+      def json_output?
+        path.strip.end_with? '.json'
+      end
     end
   end
 end

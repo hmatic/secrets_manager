@@ -1,5 +1,4 @@
 require 'secrets_manager/cli/base'
-require 'aws-sdk-secretsmanager'
 require 'yaml'
 
 module SecretsManager
@@ -10,13 +9,23 @@ module SecretsManager
 
       def execute
         config.secrets.each do |secret|
-          secret_value = Aws::SecretsManager::Client.new.get_secret_value(secret_id: secret.id).secret_string
-          yaml_secret = JSON.parse(secret_value).to_yaml[4..-1]
-          output_file = secret.path
-          write_to_file(yaml_secret, output_file)
+          write_to_file(output(secret), secret.path) && sucess_msg(secret)
         end
       end
 
+      def output(secret)
+        return client.get_secret_string(secret.id) if secret.plaintext?
+
+        secret_hash = client.get_secret_hash(secret.id)
+
+        return if secret_hash.nil?
+        return secret_hash.to_yaml[4..-1] if secret.yaml_output?
+        return JSON.pretty_generate secret_hash if secret.json_output?
+      end
+
+      def sucess_msg(secret)
+        puts "Pulled \"#{secret.id}\" secret to \"#{secret.path}\"."
+      end
     end
   end
 end
