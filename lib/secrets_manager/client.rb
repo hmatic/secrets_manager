@@ -2,12 +2,12 @@ require 'aws-sdk-secretsmanager'
 
 module SecretsManager
   class Client
-    def initialize
-      @client = Aws::SecretsManager::Client.new
+    def client
+      @client ||= Aws::SecretsManager::Client.new
     end
 
     def get_secret_string(secret_id)
-      @client.get_secret_value(secret_id: secret_id).secret_string
+      client.get_secret_value(secret_id: secret_id).secret_string
     rescue Aws::SecretsManager::Errors::ServiceError
       aws_error(secret_id)
     end
