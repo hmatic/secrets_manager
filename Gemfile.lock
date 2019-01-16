@@ -1,9 +1,9 @@
 PATH
   remote: .
   specs:
-    secrets-manager (0.1.0)
+    secrets_manager (0.2.0)
       aws-sdk-secretsmanager (~> 1.20.0)
-      rails (~> 5.2.1)
+      rails
       thor
 
 GEM
@@ -139,7 +139,7 @@ PLATFORMS
 DEPENDENCIES
   aws-sdk-secretsmanager (~> 1.20.0)
   pry
-  secrets-manager!
+  secrets_manager!
   thor
 
 BUNDLED WITH
