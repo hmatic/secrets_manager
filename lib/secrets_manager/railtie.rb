@@ -4,7 +4,7 @@ require 'secrets_manager/client'
 module SecretsManager
   class Railtie < ::Rails::Railtie
     config.before_configuration do
-      if File.file?(Rails.root.join('config', 'application.yml'))
+      unless File.file?(Rails.root.join('config', 'application.yml'))
         puts 'Initializing secrets via Secrets Manager gem.'
 
         config_path = Rails.root.join('secrets.json')
