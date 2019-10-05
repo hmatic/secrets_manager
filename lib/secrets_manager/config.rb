@@ -24,7 +24,7 @@ module SecretsManager
           secret[:id],
           secret[:secret_type],
           secret[:inject_to],
-          secret[:secrets_file_path]
+          secret[:path]
         )
       end
 
@@ -40,18 +40,18 @@ module SecretsManager
     end
 
     class SecretConfig
-      attr_reader :name, :id, :secret_type, :inject_to, :secrets_file_path
+      attr_reader :name, :id, :secret_type, :inject_to, :path
 
       DEFAULT_SECRET_TYPE = 'json'
       DEFAULT_INJECT_TO = 'env'
-      DEFAULT_SECRETS_FILE_PATH = 'config/application.yml'
+      DEFAULT_PATH = 'config/application.yml'
 
-      def initialize(name, id, secret_type, inject_to, secrets_file_path)
+      def initialize(name, id, secret_type, inject_to, path)
         @name = name
         @id = id
         @secret_type = secret_type || DEFAULT_SECRET_TYPE
         @inject_to = inject_to || DEFAULT_INJECT_TO
-        @secrets_file_path = secrets_file_path || DEFAULT_SECRETS_FILE_PATH
+        @path = path || DEFAULT_PATH
       end
 
       def plaintext?
@@ -71,11 +71,11 @@ module SecretsManager
       end
 
       def yaml_output?
-        secrets_file_path.strip.end_with?('.yml', '.yaml')
+        path.strip.end_with?('.yml', '.yaml')
       end
 
       def json_output?
-        secrets_file_path.strip.end_with? '.json'
+        path.strip.end_with? '.json'
       end
     end
   end

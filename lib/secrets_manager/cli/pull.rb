@@ -9,7 +9,7 @@ module SecretsManager
 
       def execute
         config.secrets.each do |secret|
-          write_to_file(secret_output(secret), secret.secrets_file_path) && success_msg(secret)
+          write_to_file(secret_output(secret), secret.path) && success_msg(secret)
         end
       end
 
@@ -26,7 +26,7 @@ module SecretsManager
       end
 
       def success_msg(secret)
-        puts "Pulled #{secret.name}(id: #{secret.id}) secret to \"#{secret.secrets_file_path}\"."
+        puts "Pulled #{secret.name}(id: #{secret.id}) secret to \"#{secret.path}\"."
       end
     end
   end

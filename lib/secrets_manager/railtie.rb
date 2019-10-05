@@ -10,8 +10,8 @@ module SecretsManager
       puts 'Initializing secrets via Secrets Manager gem.'
 
       secrets_config.secrets.each do |secret|
-        if File.file?(Rails.root.join(secret.secrets_file_path))
-          puts "File #{secret.secrets_file_path} already exists. Skipping secret..."
+        if File.file?(Rails.root.join(secret.path))
+          puts "File #{secret.path} already exists. Skipping secret..."
           next
         end
 
