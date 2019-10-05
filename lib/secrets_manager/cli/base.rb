@@ -22,7 +22,6 @@ module SecretsManager
       private
 
       def execute
-        raise NotImplementedError
       end
 
       def config_path

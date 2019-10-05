@@ -14,8 +14,8 @@ module SecretsManager
       return unless File.file?(@config_path)
 
       configuration = JSON.parse(config_string, symbolize_names: true)
-      configuration.each do |k, v|
-        @secrets << SecretConfig.new(k, v[:id], v[:input], v[:type], v[:path])
+      configuration.each do |key, value|
+        @secrets << SecretConfig.new(key, value[:id], value[:input], value[:type], value[:path])
       end
 
       self
