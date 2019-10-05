@@ -9,15 +9,15 @@ module SecretsManager
       include SecretsManager::Helpers
       include SecretsManager::ErrorHandling
 
-      attr_reader :client
+      attr_reader :options, :client
 
       def initialize(options)
         @options = options
-        @client = SecretsManager::Client.new
+        @client = SecretsManager::Client.new(options[:profile])
       end
 
       def run
-        config.init
+        config.init if options[:path]
         execute
       end
 
@@ -27,15 +27,19 @@ module SecretsManager
       end
 
       def config_path
-        File.join(Dir.pwd, @options['path'])
+        File.join(Dir.pwd, options['path'])
       end
 
       def environment
-        @options['environment']
+        options['environment']
       end
 
       def config
         @config ||= SecretsManager::Config.new(config_path, environment)
+      end
+
+      def colors
+        @colors ||= Thor::Shell::Color.new
       end
     end
   end

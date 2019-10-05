@@ -5,8 +5,12 @@ module SecretsManager
   class Client
     include SecretsManager::ErrorHandling
 
+    def initialize(profile = 'default')
+      @profile = profile
+    end
+
     def client
-      @client ||= Aws::SecretsManager::Client.new
+      @client ||= Aws::SecretsManager::Client.new(profile: @profile)
     end
 
     def get_secret_string(secret_id)
@@ -23,6 +27,10 @@ module SecretsManager
       JSON.parse(secret_string)
     rescue JSON::ParserError
       raise_error(:json_parse_error, { secret_id: secret_id })
+    end
+
+    def create_secret(params)
+      client.create_secret(params)
     end
   end
 end
