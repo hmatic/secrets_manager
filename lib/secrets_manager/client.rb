@@ -18,7 +18,7 @@ module SecretsManager
     def get_secret_hash(secret_id)
       secret_string = get_secret_string(secret_id)
 
-      return if secret_string.nil?
+      return {} if secret_string.nil?
 
       JSON.parse(secret_string)
     rescue JSON::ParserError

@@ -1,11 +1,13 @@
 require 'secrets_manager/config'
 require 'secrets_manager/client'
 require 'secrets_manager/helpers'
+require 'secrets_manager/error_handling'
 
 module SecretsManager
   module Cli
     class Base
       include SecretsManager::Helpers
+      include SecretsManager::ErrorHandling
 
       attr_reader :client
 

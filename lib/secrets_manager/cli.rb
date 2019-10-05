@@ -4,7 +4,6 @@ module SecretsManager
   class CLI < Thor
     # secrets-manager pull
     desc "pull", "Pull secrets"
-
     method_option 'path',
       aliases: ['-p'],
       default: 'secrets.json',
@@ -17,6 +16,14 @@ module SecretsManager
     def pull
       require 'secrets_manager/cli/pull'
       SecretsManager::Cli::Pull.new(options).run
+    end
+
+
+    desc "version", "Get current gem version"
+
+    def version
+      require 'secrets_manager/version'
+      puts SecretsManager::VERSION
     end
 
     # TODO: secrets-manager read

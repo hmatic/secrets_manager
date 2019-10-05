@@ -30,5 +30,11 @@ module SecretsManager
         'Please it in root of your project directory.'
       ]
     end
+
+    def invalid_secret_config
+      [
+        "Secret '$secret_id' has invalid configuration."
+      ]
+    end
   end
 end
