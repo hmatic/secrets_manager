@@ -9,22 +9,24 @@ module SecretsManager
 
       def execute
         config.secrets.each do |secret|
-          write_to_file(output(secret), secret.path) && sucess_msg(secret)
+          write_to_file(secret_output(secret), secret.path) && success_msg(secret)
         end
       end
 
-      def output(secret)
-        return client.get_secret_string(secret.id) if secret.plaintext?
-
-        secret_hash = client.get_secret_hash(secret.id)
-
-        return if secret_hash.nil?
-        return secret_hash.to_yaml[4..-1] if secret.yaml_output?
-        return JSON.pretty_generate secret_hash if secret.json_output?
+      def secret_output(secret)
+        if secret.plaintext?
+          client.get_secret_string(secret.id)
+        elsif secret.yaml_output?
+          client.get_secret_hash(secret.id).to_yaml[4..-1]
+        elsif secret.json_output?
+          JSON.pretty_generate(client.get_secret_hash(secret.id))
+        else
+          raise_error(:invalid_secret_config, { secret_id: secret.id })
+        end
       end
 
-      def sucess_msg(secret)
-        puts "Pulled \"#{secret.id}\" secret to \"#{secret.path}\"."
+      def success_msg(secret)
+        puts "Pulled #{secret.name}(id: #{secret.id}) secret to \"#{secret.path}\"."
       end
     end
   end

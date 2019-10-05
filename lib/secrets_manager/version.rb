@@ -1,3 +1,3 @@
 module SecretsManager
-  VERSION = '0.2.0'.freeze
+  VERSION = '1.0.0rc1'.freeze
 end

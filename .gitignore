@@ -10,3 +10,4 @@ test/dummy/storage/
 test/dummy/tmp/
 secrets.json
 config/application.yml
+.DS_Store
