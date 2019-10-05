@@ -7,20 +7,22 @@ module SecretsManager
     include SecretsManager::Helpers
 
     config.before_configuration do
-      puts 'Initializing secrets via Secrets Manager gem.'
+      if secrets_config.rails_active?
+        puts 'Initializing secrets via Secrets Manager gem.'
 
-      secrets_config.secrets.each do |secret|
-        if File.file?(Rails.root.join(secret.path))
-          puts "File #{secret.path} already exists. Skipping secret..."
-          next
-        end
+        secrets_config.secrets.each do |secret|
+          if File.file?(Rails.root.join(secret.path))
+            puts "File #{secret.path} already exists. Skipping secret..."
+            next
+          end
 
-        if secret.json? && secret.to_env?
-          inject_to_env(secret)
-        elsif secret.plaintext? && secret.to_file?
-          write_to_secrets_file(secret)
-        else
-          raise_error(:invalid_secret_config, { secret_id: secret_id })
+          if secret.json? && secret.to_env?
+            inject_to_env(secret)
+          elsif secret.plaintext? && secret.to_file?
+            write_to_secrets_file(secret)
+          else
+            raise_error(:invalid_secret_config, { secret_id: secret_id })
+          end
         end
       end
     end
