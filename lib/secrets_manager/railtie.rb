@@ -4,18 +4,16 @@ require 'secrets_manager/client'
 module SecretsManager
   class Railtie < ::Rails::Railtie
     config.before_configuration do
-      unless File.file?(Rails.root.join('config', 'application.yml'))
-        puts 'Initializing secrets via Secrets Manager gem.'
+      puts 'Initializing secrets via Secrets Manager gem.'
 
-        secrets_config.secrets.each do |secret|
-          if File.file?(Rails.root.join(secret.path))
-            puts "File #{secret.path} already exists. Skipping secret..."
-            next
-          end
+      secrets_config.secrets.each do |secret|
+        if File.file?(Rails.root.join(secret.path))
+          puts "File #{secret.path} already exists. Skipping secret..."
+          next
+        end
 
-          client.get_secret_hash(secret.id).each do |key, value|
-            ENV[key.to_s] = value
-          end
+        client.get_secret_hash(secret.id).each do |key, value|
+          ENV[key.to_s] = value
         end
       end
     end
