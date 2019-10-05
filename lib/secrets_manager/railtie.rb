@@ -7,20 +7,29 @@ module SecretsManager
       unless File.file?(Rails.root.join('config', 'application.yml'))
         puts 'Initializing secrets via Secrets Manager gem.'
 
-        config_path = Rails.root.join('secrets.json')
-        secrets_config = SecretsManager::Config.new(config_path, Rails.env).init
-        puts 'Secrets.json file is missing.' if secrets_config.nil?
-
-        aws_client = SecretsManager::Client.new
-
         secrets_config.secrets.each do |secret|
-          next if File.file?(Rails.root.join(secret.path))
+          if File.file?(Rails.root.join(secret.path))
+            puts "File #{secret.path} already exists. Skipping secret..."
+            next
+          end
 
-          aws_client.get_secret_hash(secret.id).each do |key, value|
+          client.get_secret_hash(secret.id).each do |key, value|
             ENV[key.to_s] = value
           end
         end
       end
+    end
+
+    def secrets_config
+      secrets_config ||= SecretsManager::Config.new(secrets_manager_config_path, Rails.env).init || raise_error(:config_missing)
+    end
+
+    def client
+      client ||= SecretsManager::Client.new
+    end
+
+    def secrets_manager_config_path
+      Rails.root.join('secrets.json')
     end
   end
 end
