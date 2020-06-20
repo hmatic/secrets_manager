@@ -17,7 +17,6 @@ Gem::Specification.new do |s|
   s.files = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']
 
   s.add_dependency 'aws-sdk-secretsmanager', '~> 1.20.0'
-  s.add_dependency 'rails'
   s.add_dependency 'thor'
 
   s.add_development_dependency 'pry'
