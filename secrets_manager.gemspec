@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.version     = SecretsManager::VERSION
   s.authors     = ['hmatic']
   s.email       = ['web.hmatic@gmail.com']
-  s.homepage    = 'http://hrvojematic.com'
+  s.homepage    = 'https://github.com/hmatic/secrets_manager'
   s.summary     = 'Easy secret management for AWS Secret Manager'
   s.description = 'Gem provides CLI for secrets manipulation and Rails hook which injects secrets into ENV upon booting.'
   s.license     = 'MIT'
